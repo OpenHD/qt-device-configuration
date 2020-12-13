@@ -64,6 +64,8 @@ QT_CONFIG_ARMV7_VC4:=-platform linux-rpi-vc4-g++ $(QT_CONFIG_COMMON)
 
 QT_CONFIG_ARMV8_VC4:=-platform linux-rpi4-v3d-g++ $(QT_CONFIG_COMMON)
 
+QT_CONFIG_ARMV8_JETSON_NANO:=-platform linux-jetson-nano-g++ $(QT_CONFIG_COMMON)
+
 all:
 	@echo "Run: make install DESTDIR=qt-source-root"
 	@echo "DESTDIR defaults to: [$(DESTDIR)]"
@@ -72,9 +74,9 @@ install: mkspecs
 
 mkspecs:
 	install -m 644 common/raspberrypi.conf $(DESTDIR)/$(MKSPECS)/common
-	cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi-vc4-g++ linux-rpi4-v3d-g++ $(DESTDIR)/$(MKSPECS)/
+	cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi-vc4-g++ linux-rpi4-v3d-g++ linux-jetson-nano-g++ $(DESTDIR)/$(MKSPECS)/
 
-diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++
+diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++ diff-linux-jetson-nano-g++
 
 diff-common:
 	diff -u common/raspberrypi.conf $(DESTDIR)/qtbase/mkspecs/common/raspberrypi.conf
@@ -92,6 +94,8 @@ configure-rpi3: configure-armv8
 
 configure-rpi4: configure-armv8-vc4
 
+configure-jetson-nano: configure-armv8-jetson-nano
+
 configure-armv6: mkspecs
 	mkdir -p ../build-qt-armv6 && cd ../build-qt-armv6 && $(DESTDIR)/configure $(QT_CONFIG_ARMV6)
 
@@ -106,5 +110,8 @@ configure-armv8: mkspecs
 
 configure-armv8-vc4: mkspecs
 	mkdir -p ../build-qt-armv8-vc4 && cd ../build-qt-armv8-vc4 && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_VC4)
+
+configure-armv8-jetson-nano: mkspecs
+	mkdir -p ../build-qt-armv8-jetson-nano && cd ../build-qt-armv8-jetson-nano && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_JETSON_NANO)
 
 
