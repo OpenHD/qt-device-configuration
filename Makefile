@@ -65,6 +65,8 @@ QT_CONFIG_ARMV6:=-platform linux-rpi-g++ $(QT_CONFIG_COMMON)
 
 QT_CONFIG_ARMV7:=-platform linux-rpi2-g++ $(QT_CONFIG_COMMON)
 
+QT_CONFIG_ARMV8_JETSON_NANO:=-platform linux-jetson-nano-g++ $(QT_CONFIG_COMMON)
+
 QT_CONFIG_ARMV8:=-platform linux-rpi3-g++ $(QT_CONFIG_COMMON)
 
 QT_CONFIG_ARMV7_VC4:=-platform linux-rpi2-vc4-g++ $(QT_CONFIG_COMMON) -feature kms
@@ -82,6 +84,10 @@ install: mkspecs
 mkspecs:
 	install -m 644 common/raspberrypi.conf $(DESTDIR)/$(MKSPECS)/common
 	cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi2-vc4-g++ linux-rpi4-v3d-g++ linux-rpi64-vc4-g++ $(DESTDIR)/$(MKSPECS)/
+
+cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi-vc4-g++ linux-rpi4-v3d-g++ linux-jetson-nano-g++ $(DESTDIR)/$(MKSPECS)/
+
+diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++ diff-linux-jetson-nano-g++
 
 diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++
 
@@ -103,6 +109,8 @@ configure-rpi3: configure-armv8
 
 configure-rpi4: configure-armv8-vc4
 
+configure-jetson-nano: configure-armv8-jetson-nano
+
 configure-rpi4-vc4: configure-armv8-vc4
 
 configure-rpi64: configure-armv8-64
@@ -121,6 +129,9 @@ configure-armv8: mkspecs
 
 configure-armv8-vc4: mkspecs
 	mkdir -p ../build-qt-armv8-vc4 && cd ../build-qt-armv8-vc4 && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_VC4)
+
+configure-armv8-jetson-nano: mkspecs
+	mkdir -p ../build-qt-armv8-jetson-nano && cd ../build-qt-armv8-jetson-nano && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_JETSON_NANO)
 
 configure-armv8-64: mkspecs
 	mkdir -p ../build-qt-armv8-64 && cd ../build-qt-armv8-64 && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_64)
