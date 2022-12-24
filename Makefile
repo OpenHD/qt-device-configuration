@@ -77,9 +77,9 @@ install: mkspecs
 
 mkspecs:
 	install -m 644 common/raspberrypi.conf $(DESTDIR)/$(MKSPECS)/common
-	cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi-vc4-g++ linux-rpi4-v3d-g++ linux-jetson-nano-g++ $(DESTDIR)/$(MKSPECS)/
+	cp -a linux-rpi2-g++ linux-rpi3-g++ linux-rpi-g++ linux-rpi-vc4-g++ linux-rpi4-v3d-g++ linux-jetson-nano-g++ linux-RK3566-g++ $(DESTDIR)/$(MKSPECS)/
 
-diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++ diff-linux-jetson-nano-g++
+diff: diff-common diff-linux-rpi-g++ diff-linux-rpi2-g++ diff-linux-rpi3-g++ diff-linux-rpi4-v3d-g++ diff-linux-jetson-nano-g++ diff-linux-RK3566-g++
 
 diff-common:
 	diff -u common/raspberrypi.conf $(DESTDIR)/qtbase/mkspecs/common/raspberrypi.conf
@@ -99,6 +99,8 @@ configure-rpi4: configure-armv8-vc4
 
 configure-jetson-nano: configure-armv8-jetson-nano
 
+configure-rk3566: configure-armv8-rk3566
+
 configure-armv6: mkspecs
 	mkdir -p ../build-qt-armv6 && cd ../build-qt-armv6 && $(DESTDIR)/configure $(QT_CONFIG_ARMV6)
 
@@ -116,6 +118,7 @@ configure-armv8-vc4: mkspecs
 
 configure-armv8-jetson-nano: mkspecs
 	mkdir -p ../build-qt-armv8-jetson-nano && cd ../build-qt-armv8-jetson-nano && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_JETSON_NANO)
+
 configure-armv8-rk3566: mkspecs
 	mkdir -p ../build-qt-armv8-rk3566 && cd ../build-qt-armv8-rk3566 && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_RK3566)
 
