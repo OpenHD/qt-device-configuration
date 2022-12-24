@@ -66,6 +66,9 @@ QT_CONFIG_ARMV8_VC4:=-platform linux-rpi4-v3d-g++ $(QT_CONFIG_COMMON)
 
 QT_CONFIG_ARMV8_JETSON_NANO:=-platform linux-jetson-nano-g++ $(QT_CONFIG_COMMON)
 
+QT_CONFIG_ARMV8_RK3566:=-platform linux-RK3566-g++ $(QT_CONFIG_COMMON)
+
+
 all:
 	@echo "Run: make install DESTDIR=qt-source-root"
 	@echo "DESTDIR defaults to: [$(DESTDIR)]"
@@ -113,5 +116,7 @@ configure-armv8-vc4: mkspecs
 
 configure-armv8-jetson-nano: mkspecs
 	mkdir -p ../build-qt-armv8-jetson-nano && cd ../build-qt-armv8-jetson-nano && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_JETSON_NANO)
+configure-armv8-rk3566: mkspecs
+	mkdir -p ../build-qt-armv8-rk3566 && cd ../build-qt-armv8-rk3566 && $(DESTDIR)/configure $(QT_CONFIG_ARMV8_RK3566)
 
 
